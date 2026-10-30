@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}Produtos - Sistema de Estoque{% endblock %}
+
+{% block content %}
+    <div class="topo-secao">
+        <h2>Produtos em estoque</h2>
+        <a href="{{ url_for('produtos.cadastrar') }}" class="botao">+ Novo produto</a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Categoria</th>
+                <th class="col-center">Quantidade</th>
+                <th>Preço</th>
+                <th>Peso</th>
+                <th class="col-center">Movimentação</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for produto in produtos %}
+            <tr class="{{ 'linha-alerta' if produto.quantidade < produto.estoque_minimo else '' }}">
+                <td>{{ produto.nome }}</td>
+                <td>{{ produto.categoria_nome or '-' }}</td>
+                <td class="col-center">
+                    {{ produto.quantidade }}
+                    {% if produto.quantidade < produto.estoque_minimo %}
+                    <span class="badge-alerta" title="Estoque mínimo definido: {{ produto.estoque_minimo }}">⚠ baixo</span>
+                    {% endif %}
+                </td>
+                <td>R$ {{ '%.2f'|format(produto.preco) }}</td>
+                <td>
+                    {% if produto.peso %}
+                        {{ produto.peso }} {{ 'kg' if produto.unidade_peso == 'kg' else ('L' if produto.unidade_peso == 'l' else 'mL') }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td class="col-center">
+                    <div class="movimentacao">
+                        <form method="POST" action="{{ url_for('movimentacoes.entrada') }}" class="form-mov">
+                            <input type="hidden" name="produto_id" value="{{ produto.id }}">
+                            <input type="hidden" name="quantidade" class="qtd-hidden">
+                            <button type="submit" class="btn-entrada">+</button>
+                        </form>
+                        <input type="number" min="1" class="input-mov" placeholder="Qtd">
+                        <form method="POST" action="{{ url_for('movimentacoes.saida') }}" class="form-mov">
+                            <input type="hidden" name="produto_id" value="{{ produto.id }}">
+                            <input type="hidden" name="quantidade" class="qtd-hidden">
+                            <button type="submit" class="btn-saida">-</button>
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <div class="acoes">
+                        <a href="{{ url_for('produtos.editar', produto_id=produto.id) }}" class="btn-editar">Editar</a>
+                        <a href="{{ url_for('movimentacoes.historico', produto_id=produto.id) }}" class="btn-historico">Histórico</a>
+                        <form method="POST" action="{{ url_for('produtos.excluir', produto_id=produto.id) }}">
+                            <button type="submit" class="btn-excluir" onclick="return confirm('Excluir este produto?')">Excluir</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7">Nenhum produto cadastrado ainda.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

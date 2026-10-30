@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Histórico - {{ produto.nome }}{% endblock %}
+
+{% block content %}
+    <div class="topo-secao">
+        <h2>Histórico de movimentações — {{ produto.nome }}</h2>
+        <a href="{{ url_for('produtos.listar') }}" class="botao">Voltar</a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Tipo</th>
+                <th class="col-center">Quantidade</th>
+                <th>Responsável</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mov in movimentacoes %}
+            <tr>
+                <td>{{ mov.data_movimentacao.strftime('%d/%m/%Y %H:%M') }}</td>
+                <td>
+                    {% if mov.tipo == 'entrada' %}
+                    <span class="tag-entrada">Entrada</span>
+                    {% else %}
+                    <span class="tag-saida">Saída</span>
+                    {% endif %}
+                </td>
+                <td class="col-center">{{ mov.quantidade }}</td>
+                <td>{{ mov.usuario_nome or '-' }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4">Nenhuma movimentação registrada para este produto.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

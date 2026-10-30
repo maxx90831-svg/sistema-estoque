@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Usuários - Sistema de Estoque{% endblock %}
+
+{% block content %}
+    <div class="topo-secao">
+        <h2>Usuários do sistema</h2>
+        <a href="{{ url_for('usuarios.cadastrar') }}" class="botao">+ Novo usuário</a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Cargo</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+            <tr>
+                <td>{{ usuario.nome }}</td>
+                <td>{{ usuario.email }}</td>
+                <td>{{ 'Administrador' if usuario.cargo == 'administrador' else 'Funcionário' }}</td>
+                <td>
+                    {% if usuario.id != session.get('usuario_id') %}
+                    <form method="POST" action="{{ url_for('usuarios.excluir', usuario_id=usuario.id) }}">
+                        <button type="submit" class="btn-excluir" onclick="return confirm('Excluir este usuário?')">Excluir</button>
+                    </form>
+                    {% else %}
+                    <span class="usuario-logado">(você)</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4">Nenhum usuário cadastrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

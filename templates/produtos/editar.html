@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar produto - Sistema de Estoque{% endblock %}
+
+{% block content %}
+    <h2>Editar produto</h2>
+
+    <form method="POST">
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" name="nome" value="{{ produto.nome }}" required>
+
+        <label for="categoria_id">Categoria</label>
+        <select id="categoria_id" name="categoria_id">
+            <option value="">Selecione...</option>
+            {% for categoria in categorias %}
+            <option value="{{ categoria.id }}" {% if produto.categoria_id == categoria.id %}selected{% endif %}>{{ categoria.nome }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="quantidade">Quantidade</label>
+        <input type="number" id="quantidade" name="quantidade" min="0" value="{{ produto.quantidade }}" required>
+
+        <label for="estoque_minimo">Estoque mínimo (dispara alerta)</label>
+        <input type="number" id="estoque_minimo" name="estoque_minimo" min="0" value="{{ produto.estoque_minimo }}" required>
+
+        <label for="preco">Preço</label>
+        <input type="number" id="preco" name="preco" min="0" step="0.01" value="{{ produto.preco }}" required>
+
+        <label for="peso">Peso / Volume</label>
+        <input type="number" id="peso" name="peso" min="0" step="0.001" value="{{ produto.peso or '' }}">
+
+        <label for="unidade_peso">Unidade</label>
+        <select id="unidade_peso" name="unidade_peso">
+            <option value="kg" {% if produto.unidade_peso == 'kg' %}selected{% endif %}>Quilos (kg)</option>
+            <option value="l" {% if produto.unidade_peso == 'l' %}selected{% endif %}>Litros (L)</option>
+            <option value="ml" {% if produto.unidade_peso == 'ml' %}selected{% endif %}>Mililitros (mL)</option>
+        </select>
+
+        <button type="submit">Salvar alterações</button>
+    </form>
+{% endblock %}

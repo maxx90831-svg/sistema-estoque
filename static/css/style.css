@@ -1,0 +1,260 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    background-color: #f4f5f7;
+    color: #222;
+}
+
+header {
+    background-color: #232f3e;
+    color: #fff;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.area-usuario {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+}
+
+.saudacao {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #cbd5e0;
+}
+
+.area-usuario nav {
+    display: flex;
+    gap: 1.25rem;
+}
+
+.area-usuario nav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.area-usuario nav a:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding: 2rem;
+    max-width: 1040px;
+    margin: 0 auto;
+}
+
+.topo-secao {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.botao {
+    background-color: #ff9900;
+    color: #111;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+}
+
+th, td {
+    text-align: left;
+    padding: 0.75rem;
+    border-bottom: 1px solid #ddd;
+}
+
+.col-center {
+    text-align: center;
+}
+
+form label {
+    display: block;
+    margin-top: 0.75rem;
+    font-weight: bold;
+}
+
+form input, form select {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.25rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form button {
+    margin-top: 1.25rem;
+    background-color: #232f3e;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.mensagens {
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    list-style: none;
+    margin-bottom: 1rem;
+}
+
+.login-box {
+    max-width: 360px;
+    margin: 4rem auto;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+/* Coluna de ações (Editar / Histórico / Excluir) como botões, não links */
+.acoes {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.acoes form {
+    margin: 0;
+}
+
+.acoes a {
+    text-decoration: none;
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.82rem;
+    border-radius: 4px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.btn-editar {
+    background-color: #2563a8;
+}
+.btn-editar:hover {
+    background-color: #1f5389;
+}
+
+.btn-historico {
+    background-color: #5a6268;
+}
+.btn-historico:hover {
+    background-color: #494f54;
+}
+
+.btn-excluir {
+    margin-top: 0;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.82rem;
+    background-color: #c0392b;
+    border: none;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-excluir:hover {
+    background-color: #a93226;
+}
+
+/* Movimentação: caixa única de quantidade + dois botões */
+.movimentacao {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.input-mov {
+    width: 55px;
+    padding: 0.3rem;
+    margin-top: 0;
+    text-align: center;
+}
+
+.form-mov {
+    margin: 0;
+}
+
+.btn-entrada {
+    margin-top: 0;
+    padding: 0.3rem 0.7rem;
+    font-size: 0.78rem;
+    background-color: #2e7d32;
+    border: none;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.btn-entrada:hover { background-color: #276a2b; }
+
+.btn-saida {
+    margin-top: 0;
+    padding: 0.3rem 0.7rem;
+    font-size: 0.78rem;
+    background-color: #b8860b;
+    border: none;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.btn-saida:hover { background-color: #9c7209; }
+
+.usuario-logado {
+    color: #888;
+    font-size: 0.85rem;
+    font-style: italic;
+}
+
+.tag-entrada {
+    color: #2e7d32;
+    font-weight: bold;
+}
+
+.tag-saida {
+    color: #b8860b;
+    font-weight: bold;
+}
+
+.linha-alerta {
+    background-color: #fdecea;
+}
+
+.linha-alerta:hover {
+    background-color: #fbdbd7;
+}
+
+.badge-alerta {
+    display: inline-block;
+    margin-left: 0.4rem;
+    padding: 0.1rem 0.4rem;
+    font-size: 0.72rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #c0392b;
+    border-radius: 3px;
+    cursor: help;
+}
