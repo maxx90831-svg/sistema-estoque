@@ -119,14 +119,14 @@ pip install -r requirements-dev.txt
 python -m pytest -v
 ```
 
-A suíte tem 83 testes: 27 de unidade (validação de produto) e 56 de integração (autenticação, produtos, movimentações e usuários). Os testes criam um banco separado, `sistema_estoque_teste`, a partir do `schema.sql` e o removem ao final, sem tocar no banco do sistema. O MySQL precisa estar em execução e o `.env` precisa ter a senha correta.
+A suíte tem 100 testes: 35 de unidade e 65 de integração (autenticação, produtos, movimentações e usuários). Os testes criam um banco separado, `sistema_estoque_teste`, a partir do `schema.sql` e o removem ao final, sem tocar no banco do sistema. O MySQL precisa estar em execução e o `.env` precisa ter a senha correta.
 
 ## Limitações conhecidas
 
 - Servidor de desenvolvimento, sem HTTPS
 - Sem recuperação de senha, e com senha padrão no administrador inicial
 - Excluir um produto remove também o seu histórico de movimentações
-- Quantidade vazia ou não numérica em uma movimentação, enviada fora do navegador, gera erro interno
+- Quantidade acima da capacidade do campo no banco de dados gera erro interno
 - O cargo do usuário fica guardado na sessão e não é reconsultado a cada requisição
 
 ## Autoria
