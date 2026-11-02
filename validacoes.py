@@ -38,3 +38,13 @@ def validar_produto(nome, quantidade, preco, unidade_peso, estoque_minimo):
         erros.append('Estoque mínimo inválido.')
 
     return erros
+
+def converter_quantidade(valor):
+    """Converte o valor recebido do formulário em número inteiro.
+
+    Devolve None quando o valor está vazio, ausente ou não é um inteiro.
+    """
+    try:
+        return int(valor)
+    except (TypeError, ValueError):
+        return None
