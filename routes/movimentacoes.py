@@ -1,21 +1,33 @@
 from flask import Blueprint, request, redirect, url_for, flash, render_template, session
 from app import mysql
 from routes.auth import login_obrigatorio
+from validacoes import converter_quantidade
 
 movimentacoes_bp = Blueprint('movimentacoes', __name__, url_prefix='/movimentacoes')
+
+MENSAGEM_QUANTIDADE_INVALIDA = 'Informe uma quantidade válida (número inteiro).'
 
 
 @movimentacoes_bp.route('/entrada', methods=['POST'])
 @login_obrigatorio
 def entrada():
     produto_id = request.form.get('produto_id')
-    quantidade = int(request.form.get('quantidade', 0))
+    quantidade = converter_quantidade(request.form.get('quantidade'))
+
+    if quantidade is None:
+        flash(MENSAGEM_QUANTIDADE_INVALIDA)
+        return redirect(url_for('produtos.listar'))
 
     if quantidade <= 0:
         flash('A quantidade de entrada deve ser maior que zero.')
         return redirect(url_for('produtos.listar'))
 
     cursor = mysql.connection.cursor()
+    cursor.execute('SELECT id FROM produtos WHERE id = %s', (produto_id,))
+    if not cursor.fetchone():
+        flash('Produto não encontrado.')
+        return redirect(url_for('produtos.listar'))
+
     cursor.execute(
         'UPDATE produtos SET quantidade = quantidade + %s WHERE id = %s',
         (quantidade, produto_id)
@@ -32,7 +44,11 @@ def entrada():
 @login_obrigatorio
 def saida():
     produto_id = request.form.get('produto_id')
-    quantidade = int(request.form.get('quantidade', 0))
+    quantidade = converter_quantidade(request.form.get('quantidade'))
+
+    if quantidade is None:
+        flash(MENSAGEM_QUANTIDADE_INVALIDA)
+        return redirect(url_for('produtos.listar'))
 
     cursor = mysql.connection.cursor()
     cursor.execute('SELECT quantidade FROM produtos WHERE id = %s', (produto_id,))
